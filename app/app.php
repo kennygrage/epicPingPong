@@ -15,16 +15,12 @@
     });
 
     $app->get("/view_ping_pong", function() use($app) {
-        //$my_PingPongGenerator = new PingPongGenerator;
         $output_array = array();
-        $result_number = $_GET['number'];
-        $counter = 1;
-        while ($counter <= $result_number) {
+        for ($i = 1; $i <= $_GET['number']; $i++) {
             $number = new PingPongGenerator;
-            $number = $number->makePingPong($counter);
-            array_push($output_array, $number);
-            ++$counter;
+            array_push($output_array, $number->makePingPong($i));
         }
+
         return $app['twig']->render('ping-pong-generator.html.twig', array('result' => $output_array));
     });
 
