@@ -4,6 +4,8 @@
 
     $app = new Silex\Application();
 
+    $app['debug'] = true;
+
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' => __DIR__.'/../views'
     ));
@@ -13,9 +15,17 @@
     });
 
     $app->get("/view_ping_pong", function() use($app) {
-        $my_PingPongGenerator = new PingPongGenerator;
-        $results_array = $my_PingPongGenerator->makePingPong($_GET['number']);
-        return $app['twig']->render('ping-pong-generator.html.twig', array('result' => $results_array));
+        //$my_PingPongGenerator = new PingPongGenerator;
+        $output_array = array();
+        $result_number = $_GET['number'];
+        $counter = 1;
+        while ($counter <= $result_number) {
+            $number = new PingPongGenerator;
+            $number = $number->makePingPong($counter);
+            array_push($output_array, $number);
+            ++$counter;
+        }
+        return $app['twig']->render('ping-pong-generator.html.twig', array('result' => $output_array));
     });
 
     return $app;

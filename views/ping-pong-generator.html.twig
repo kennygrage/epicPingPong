@@ -4,7 +4,12 @@
 </head>
 
 <body>
-{{ result }}
+
+{% for element in result %}
+{{ element }}
+<br>
+{% endfor %}
+
 <br><br>
 <a href="/">Home</a>
 </body>
